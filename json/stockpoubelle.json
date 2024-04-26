@@ -1,0 +1,907 @@
+[
+    {
+      
+        "reference":"SBP01-01",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":1
+        
+    },
+    {
+      
+        "reference":"SBP01-02",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":1
+        
+    },
+    {
+      
+        "reference":"SBP01-03",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":1
+        
+    },{
+      
+        "reference":"SBP01-04",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":1
+        
+    }
+    ,
+    {
+      
+        "reference":"SBP02-05",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":2
+        
+    },
+    {
+      
+        "reference":"SBP02-06",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":2
+        
+    },
+    {
+      
+        "reference":"SBP02-07",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":2
+        
+    },{
+      
+        "reference":"SBP02-08",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":2
+        
+    },
+    {
+      
+        "reference":"SBP03-09",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":3
+        
+    },
+    {
+      
+        "reference":"SBP03-10",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":3
+        
+    },
+    {
+      
+        "reference":"SBP03-11",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":3
+        
+    },{
+      
+        "reference":"SBP03-12",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":3
+        
+    },{
+      
+        "reference":"SBP04-13",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":4
+        
+    },
+    {
+      
+        "reference":"SBP04-14",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":4
+        
+    },
+    {
+      
+        "reference":"SBP04-15",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":4
+        
+    },{
+      
+        "reference":"SBP04-16",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":4
+        
+    },{
+      
+        "reference":"SBP05-17",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":5
+        
+    },
+    {
+      
+        "reference":"SBP05-18",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":5
+        
+    },
+    {
+      
+        "reference":"SBP05-19",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":5
+        
+    },{
+      
+        "reference":"SBP05-20",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":5
+        
+    },{
+      
+        "reference":"SBP06-21",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":6
+        
+    },
+    {
+      
+        "reference":"SBP06-22",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":6
+        
+    },
+    {
+      
+        "reference":"SBP06-23",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":6
+        
+    },{
+      
+        "reference":"SBP06-24",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":6
+        
+    },{
+      
+        "reference":"SBP07-25",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":7
+        
+    },
+    {
+      
+        "reference":"SBP07-26",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":7
+        
+    },
+    {
+      
+        "reference":"SBP07-27",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":7
+        
+    },{
+      
+        "reference":"SBP07-28",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":7
+        
+    },{
+      
+        "reference":"SBP08-29",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":8
+        
+    },
+    {
+      
+        "reference":"SBP08-30",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":8
+        
+    },
+    {
+      
+        "reference":"SBP08-31",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":8
+        
+    },{
+      
+        "reference":"SBP08-32",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":8
+        
+    },{
+      
+        "reference":"SBP09-33",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":9
+        
+    },
+    {
+      
+        "reference":"SBP09-34",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":9
+        
+    },
+    {
+      
+        "reference":"SBP09-35",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":9
+        
+    },{
+      
+        "reference":"SBP09-36",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":9
+        
+    },{
+      
+        "reference":"SBP10-37",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":10
+        
+    },
+    {
+      
+        "reference":"SBP10-38",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":10
+        
+    },
+    {
+      
+        "reference":"SBP10-39",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":10
+        
+    },{
+      
+        "reference":"SBP10-40",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":10
+        
+    }
+    ,{
+      
+        "reference":"SBP11-41",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":11
+        
+    },
+    {
+      
+        "reference":"SBP11-42",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":11
+        
+    },
+    {
+      
+        "reference":"SBP11-43",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":11
+        
+    },{
+      
+        "reference":"SBP11-44",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":11
+        
+    },{
+      
+        "reference":"SBP12-45",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":12
+        
+    },
+    {
+      
+        "reference":"SBP12-46",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":12
+        
+    },
+    {
+      
+        "reference":"SBP12-47",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":12
+        
+    },{
+      
+        "reference":"SBP12-48",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":12
+        
+    },{
+      
+        "reference":"SBP13-49",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":13
+        
+    },
+    {
+      
+        "reference":"SBP13-50",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":13
+        
+    },
+    {
+      
+        "reference":"SBP13-51",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":13
+        
+    },{
+      
+        "reference":"SBP13-52",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":13
+        
+    },{
+      
+        "reference":"SBP14-53",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":14
+        
+    },
+    {
+      
+        "reference":"SBP14-54",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":14
+        
+    },
+    {
+      
+        "reference":"SBP14-55",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":14
+        
+    },{
+      
+        "reference":"SBP14-56",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":14
+        
+    },{
+      
+        "reference":"SBP15-57",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":15
+        
+    },
+    {
+      
+        "reference":"SBP15-58",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":15
+        
+    },
+    {
+      
+        "reference":"SBP15-59",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":15
+        
+    },{
+      
+        "reference":"SBP15-60",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":15
+        
+    },{
+      
+        "reference":"SBP16-61",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":16
+        
+    },
+    {
+      
+        "reference":"SBP16-62",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":16
+        
+    },
+    {
+      
+        "reference":"SBP16-63",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":16
+        
+    },{
+      
+        "reference":"SBP16-64",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":16
+        
+    },{
+      
+        "reference":"SBP17-65",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":17
+        
+    },
+    {
+      
+        "reference":"SBP17-69",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":17
+        
+    },
+    {
+      
+        "reference":"SBP17-67",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":17
+        
+    },{
+      
+        "reference":"SBP17-68",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":17
+        
+    },{
+      
+        "reference":"SBP18-69",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":18
+        
+    },
+    {
+      
+        "reference":"SBP18-70",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":18
+        
+    },
+    {
+      
+        "reference":"SBP18-71",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":18
+        
+    },{
+      
+        "reference":"SBP18-72",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":18
+        
+    },{
+      
+        "reference":"SBP19-73",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":19
+        
+    },
+    {
+      
+        "reference":"SBP19-74",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":19
+        
+    },
+    {
+      
+        "reference":"SBP19-75",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":19
+        
+    },{
+      
+        "reference":"SBP19-76",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":19
+        
+    },{
+      
+        "reference":"SBP20-77",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":20
+        
+    },
+    {
+      
+        "reference":"SBP20-78",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":20
+        
+    },
+    {
+      
+        "reference":"SBP20-79",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":20
+        
+    },{
+      
+        "reference":"SBP20-80",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":20
+        
+    },{
+      
+        "reference":"SBP21-81",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":21
+        
+    },
+    {
+      
+        "reference":"SBP21-82",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":21
+        
+    },
+    {
+      
+        "reference":"SBP21-83",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":21
+        
+    },{
+      
+        "reference":"SBP21-84",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":21
+        
+    },{
+      
+        "reference":"SBP22-85",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":22
+        
+    },
+    {
+      
+        "reference":"SBP22-86",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":22
+        
+    },
+    {
+      
+        "reference":"SBP22-87",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":22
+        
+    },{
+      
+        "reference":"SBP22-88",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":22
+        
+    },{
+      
+        "reference":"SBP23-89",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":23
+        
+    },
+    {
+      
+        "reference":"SBP23-90",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":23
+        
+    },
+    {
+      
+        "reference":"SBP23-91",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":23
+        
+    },{
+      
+        "reference":"SBP23-92",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":23
+        
+    },{
+      
+        "reference":"SBP24-93",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":24
+        
+    },
+    {
+      
+        "reference":"SBP24-94",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":24
+        
+    },
+    {
+      
+        "reference":"SBP24-95",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":24
+        
+    },{
+      
+        "reference":"SBP24-96",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":24
+        
+    },{
+      
+        "reference":"SBP25-97",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":25
+        
+    },
+    {
+      
+        "reference":"SBP25-98",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":25
+        
+    },
+    {
+      
+        "reference":"SBP25-99",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":25
+        
+    },{
+      
+        "reference":"SBP25-100",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":25
+        
+    },{
+      
+        "reference":"SBP26-101",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":26
+        
+    },
+    {
+      
+        "reference":"SBP26-102",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":26
+        
+    },
+    {
+      
+        "reference":"SBP26-103",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":26
+        
+    },{
+      
+        "reference":"SBP26-104",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":26
+        
+    },{
+      
+        "reference":"SBP27-105",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":27
+        
+    },
+    {
+      
+        "reference":"SBP27-106",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":27
+        
+    },
+    {
+      
+        "reference":"SBP27-107",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":27
+        
+    },{
+      
+        "reference":"SBP27-108",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":27
+        
+    },{
+      
+        "reference":"SBP28-109",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":28
+        
+    },
+    {
+      
+        "reference":"SBP28-110",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":28
+        
+    },
+    {
+      
+        "reference":"SBP28-111",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":28
+        
+    },{
+      
+        "reference":"SBP28-112",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":28
+        
+    },{
+      
+        "reference":"SBP29-113",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":29
+        
+    },
+    {
+      
+        "reference":"SBP29-114",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":29
+        
+    },
+    {
+      
+        "reference":"SBP29-115",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":29
+        
+    },{
+      
+        "reference":"SBP29-116",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":29
+        
+    },{
+      
+        "reference":"SBP30-117",
+        "type_poubelle":"plastique",
+        "isAffect":false,
+        "StockBlocPoubelleId":30
+        
+    },
+    {
+      
+        "reference":"SBP30-118",
+        "type_poubelle":"canette",
+        "isAffect":false,
+        "StockBlocPoubelleId":30
+        
+    },
+    {
+      
+        "reference":"SBP30-119",
+        "type_poubelle":"papier",
+        "isAffect":false,
+        "StockBlocPoubelleId":30
+        
+    },{
+      
+        "reference":"SBP30-120",
+        "type_poubelle":"composte",
+        "isAffect":false,
+        "StockBlocPoubelleId":30
+        
+    }
+]

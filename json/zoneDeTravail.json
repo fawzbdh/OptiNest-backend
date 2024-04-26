@@ -1,0 +1,18 @@
+[
+    {
+        "region":"Zone A",
+        "code_postal":["1006","1010"],
+        "quantite_total_collecte_plastique":0,
+        "quantite_total_collecte_composte":0,
+        "quantite_total_collecte_papier":0,
+        "quantite_total_collecte_canette":0
+    },
+    {
+        "region":"Zone B",
+        "code_postal":["1016","1020"],
+        "quantite_total_collecte_plastique":0,
+        "quantite_total_collecte_composte":0,
+        "quantite_total_collecte_papier":0,
+        "quantite_total_collecte_canette":0
+    }
+]

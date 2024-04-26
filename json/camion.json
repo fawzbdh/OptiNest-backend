@@ -1,0 +1,30 @@
+[{
+    "matricule":"123 TUN 1234",
+    "longitude": 10.168162890353093,
+    "latitude":36.80523034629149,
+    "volume_maximale_camion":2000,
+    "volume_actuelle_plastique":0,
+    "volume_actuelle_papier":0,
+    "volume_actuelle_composte":0,
+    "volume_actuelle_canette":0,
+    "ZoneTravailId":1,
+    "ZoneDepotId":1
+   
+    
+},
+{
+    "matricule":"223 TUN 4321",
+    "longitude":  10.205454561772935,
+    "latitude":36.73949534470281,
+    "volume_maximale_camion":2000,
+    "volume_actuelle_plastique":0,
+    "volume_actuelle_papier":0,
+    "volume_actuelle_composte":0,
+    "volume_actuelle_canette":0,
+    "ZoneTravailId":2,
+    "ZoneDepotId":2
+   
+    
+}
+
+]

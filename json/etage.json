@@ -1,0 +1,68 @@
+[
+    {
+    "nom_etage_etablissement":"rez-de-chaussée",
+    "BlocEtablissementId":1
+    
+},{
+    "nom_etage_etablissement":"1",
+    "BlocEtablissementId":1
+    
+},{
+    "nom_etage_etablissement":"2",
+    "BlocEtablissementId":1
+    
+},{
+    "nom_etage_etablissement":"rez-de-chaussée",
+    "BlocEtablissementId":2
+    
+},{
+    "nom_etage_etablissement":"1",
+    "BlocEtablissementId":2
+    
+},{
+    "nom_etage_etablissement":"2",
+    "BlocEtablissementId":2
+    
+},{
+    "nom_etage_etablissement":"rez-de-chaussée",
+    "BlocEtablissementId":3
+    
+},{
+    "nom_etage_etablissement":"1",
+    "BlocEtablissementId":3
+    
+},
+{
+    "nom_etage_etablissement":"rez-de-chaussée",
+    "BlocEtablissementId":4
+    
+},
+{
+    "nom_etage_etablissement":"rez-de-chaussée",
+    "BlocEtablissementId":5
+    
+},
+{
+    "nom_etage_etablissement":"1",
+    "BlocEtablissementId":5
+    
+},
+{
+    "nom_etage_etablissement":"2",
+    "BlocEtablissementId":5
+    
+},{
+    "nom_etage_etablissement":"rez-de-chaussée",
+    "BlocEtablissementId":6
+    
+},
+{
+    "nom_etage_etablissement":"1",
+    "BlocEtablissementId":6
+    
+},
+{
+    "nom_etage_etablissement":"2",
+    "BlocEtablissementId":6
+    
+}]

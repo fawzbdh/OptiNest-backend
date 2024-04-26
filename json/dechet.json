@@ -1,0 +1,26 @@
+[
+    {
+    "type_dechet":"plastique",
+    "prix_unitaire":3.5,
+    "prixApresPromotion":3
+    
+},
+{
+    "type_dechet":"canette",
+    "prix_unitaire":4.5,
+    "prixApresPromotion":4
+    
+},
+{
+    "type_dechet":"papier",
+    "prix_unitaire":2.5,
+    "prixApresPromotion":2
+    
+},
+{
+    "type_dechet":"composte",
+    "prix_unitaire":1.5,
+    "prixApresPromotion":1
+    
+}
+]

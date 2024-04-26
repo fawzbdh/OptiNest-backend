@@ -1,0 +1,26 @@
+[
+    {
+    "nom_bloc_etablissment":"Bloc A",
+    "EtablissementId":1
+    },
+    {
+    "nom_bloc_etablissment":"Bloc B",
+    "EtablissementId":1
+    },
+    {
+    "nom_bloc_etablissment":"Bloc C",
+    "EtablissementId":1
+    },
+    {
+     "nom_bloc_etablissment":"Bloc 1",
+     "EtablissementId":2
+    },
+    {
+     "nom_bloc_etablissment":"Bloc 2",
+     "EtablissementId":2
+    },
+    {
+     "nom_bloc_etablissment":"Bloc 3",
+     "EtablissementId":2
+    }
+]

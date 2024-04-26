@@ -1,0 +1,26 @@
+[
+    {
+        "adresse":"bab lassal",
+        "longitude":10.16883116554101,
+        "latitude":36.81339532990175,
+        "quantite_depot_maximale":20000,
+        "quantite_depot_actuelle_plastique":0,
+        "quantite_depot_actuelle_papier":0,
+        "quantite_depot_actuelle_composte":0,
+        "quantite_depot_actuelle_canette":0,
+        "ZoneTravailId":1
+        
+    },
+    {
+        "adresse":"Mourouj 5",
+        "longitude":10.208276830934821,
+        "latitude":36.70987011654853, 
+        "quantite_depot_maximale":20000,
+        "quantite_depot_actuelle_plastique":0,
+        "quantite_depot_actuelle_papier":0,
+        "quantite_depot_actuelle_composte":0,
+        "quantite_depot_actuelle_canette":0,
+        "ZoneTravailId":2
+        
+    }
+]
