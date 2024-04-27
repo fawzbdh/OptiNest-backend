@@ -12,18 +12,6 @@ exports.getUserValidator = [
 exports.updateUserValidator = [
   check("id").isInt().withMessage("Invalid User id format"),
   body("username").optional(),
-  check("email")
-    .optional()
-
-    .isEmail()
-    .withMessage("Invalid email address")
-    .custom((val) =>
-      User.findOne({ where: { email: val } }).then((user) => {
-        if (user) {
-          return Promise.reject(new Error("E-mail already in user"));
-        }
-      })
-    ),
 
   check("role").optional(),
   validatorMiddleware,
