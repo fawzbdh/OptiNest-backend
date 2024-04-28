@@ -27,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     Project.belongsTo(models.User, {
       onDelete: "cascade",
     });
+    Project.hasMany(models.Fichier, {
+      onDelete: "cascade",
+    });
   };
 
   return Project;

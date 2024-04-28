@@ -50,7 +50,6 @@ exports.login = asyncHandler(async (req, res, next) => {
 
 // @desc   make sure the user is logged in
 exports.protect = asyncHandler(async (req, res, next) => {
-  // 1) Check if token exist, if exist get
   let token;
   if (
     req.headers.authorization &&
@@ -58,48 +57,53 @@ exports.protect = asyncHandler(async (req, res, next) => {
   ) {
     token = req.headers.authorization.split(" ")[1];
   }
+
+  // If token doesn't exist, return an error
   if (!token) {
     return next(
       new ApiError(
-        "You are not login, Please login to get access this route",
+        "You are not logged in. Please log in to access this route",
         401
       )
     );
   }
 
-  // 2) Verify token (no change happens, expired token)
-  const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  try {
+    // Verify token and extract user ID from it
+    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-  // 3) Check if user exists
-  const currentUser = await User.findByPk(decoded.userId);
-  if (!currentUser) {
-    return next(
-      new ApiError(
-        "The user that belong to this token does no longer exist",
-        401
-      )
-    );
-  }
-
-  // 4) Check if user change his password after token created
-  if (currentUser.passwordChangedAt) {
-    const passChangedTimestamp = parseInt(
-      currentUser.passwordChangedAt.getTime() / 1000,
-      10
-    );
-    // Password changed after token created (Error)
-    if (passChangedTimestamp > decoded.iat) {
+    // Check if user exists
+    const currentUser = await User.findByPk(decoded.userId);
+    if (!currentUser) {
       return next(
-        new ApiError(
-          "User recently changed his password. please login again..",
-          401
-        )
+        new ApiError("The user that belongs to this token does not exist", 401)
       );
     }
-  }
 
-  req.user = currentUser;
-  next();
+    // Check if user changed his password after token creation
+    if (currentUser.passwordChangedAt) {
+      const passChangedTimestamp = parseInt(
+        currentUser.passwordChangedAt.getTime() / 1000,
+        10
+      );
+      // Password changed after token created (Error)
+      if (passChangedTimestamp > decoded.iat) {
+        return next(
+          new ApiError(
+            "User recently changed his password. Please log in again.",
+            401
+          )
+        );
+      }
+    }
+
+    // Attach user information to req.user object
+    req.user = currentUser;
+    next();
+  } catch (error) {
+    // Handle token verification errors
+    return next(new ApiError("Invalid token. Please log in again.", 401));
+  }
 });
 exports.allowedTo = (...roles) =>
   asyncHandler(async (req, res, next) => {
