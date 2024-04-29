@@ -1,8 +1,13 @@
 const Fichier = require("../models").Fichier;
 const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const { v4: uuidv4 } = require("uuid"); // Import UUID module
+const path = require("path");
+const { spawn } = require("child_process");
+const iconv = require("iconv-lite");
 
-// @desc    Get all fichier
 // @route   GET api/fichier/
 // @access  Private
 exports.getFichiers = asyncHandler(async (req, res) => {
@@ -33,75 +38,69 @@ exports.getFichiersByProjectId = asyncHandler(async (req, res, next) => {
   res.status(200).json({ results: fichiers.length, data: fichiers });
 });
 
-// @desc    Create a new Fichier
+// @desc    Create a new Fichier with multiple files
 // @route   POST api/fichier/
 // @access  Private
-exports.createFichier = asyncHandler(async (req, res) => {
-    const files = req.files; // Access the array of uploaded files
-    const baseUrl = "http://localhost:8000"; // Assuming your server is running on localhost:3001
-  
-    // Process each uploaded file
-    const fichierPromises = files.map(async (file) => {
-      const dxfFilePath = file.path;
-      const uniqueFileName = `${uuidv4()}.png`; // Generate a unique file name
-      const imageFilePath = path.join(__dirname, "uploads", uniqueFileName);
-  
-      // Call the Python script to parse the DXF file
+exports.createFichier = asyncHandler(async (req, res, next) => {
+  const baseUrl = "http://localhost:8000";
+
+  // Assuming your file input field name is 'files'
+  upload.array("files")(req, res, async (err) => {
+    if (err) {
+      return next(new ApiError("Error uploading files", 400));
+    }
+
+    const files = req.files;
+    const projectId = req.body.projectId; // Assuming projectId is sent in the request body
+
+    const createdFiles = [];
+
+    // Loop through uploaded files and save them to the database
+    for (const file of files) {
+      const uniqueFileName = `${uuidv4()}.png`; // Generate unique file name
+      const imagePath = path.join(__dirname, "..", "uploads", uniqueFileName); // Path to save the file
+
+      // Execute your Python script to process the file
       const pythonProcess = spawn("python", [
         "parse_dxf.py",
-        dxfFilePath,
-        imageFilePath,
+        file.path,
+        imagePath,
       ]);
-  
-      // Handle Python process stdout data
-      const dimensionsPromise = new Promise((resolve, reject) => {
-        pythonProcess.stdout.on("data", (data) => {
-          const dimensions = JSON.parse(data);
-          resolve(dimensions);
+
+      pythonProcess.stdout.on("data", async (data) => {
+        const dimensions = JSON.parse(data); // Parse JSON output from Python script
+        const { width, height } = dimensions; // Extract width and height
+        const decodedFileName = iconv.decode(
+          Buffer.from(file.originalname, "binary"),
+          "utf-8"
+        ); // Decode the file name to handle special characters
+
+        // Save file details to the database
+        const newFile = await Fichier.create({
+          ProjectId: projectId,
+          name: decodedFileName, // Change property name to 'name'
+          path: baseUrl + "/uploads/" + uniqueFileName, // Save the path to retrieve the file later
+          width: width,
+          height: height,
+          quantity: 1,
         });
+
+        createdFiles.push(newFile);
+
+        // If all files are processed, send response
+        if (createdFiles.length === files.length) {
+          res.status(201).json({ data: createdFiles });
+        }
       });
-  
-      // Handle Python process stderr data
+
       pythonProcess.stderr.on("data", (data) => {
         console.error("Python error:", data.toString());
-        reject(new Error("Error parsing DXF"));
+        fs.unlinkSync(file.path); // Delete the file if processing fails
+        return next(new ApiError("Error processing files", 500));
       });
-  
-      try {
-        // Wait for the dimensions promise to resolve
-        const dimensions = await dimensionsPromise;
-  
-        // Construct the full image URL with the base URL
-        const imagePath = `${baseUrl}/uploads/${uniqueFileName}`;
-  
-        // Create a new Fichier record in the database
-        const fichier = await Fichier.create({
-          name: file.originalname, // Use the original filename of the uploaded file
-          width: dimensions.width,
-          height: dimensions.height,
-          path: imagePath,
-          ProjectId: req.body.projectId, // Assuming projectId is provided in the request body
-        });
-  
-        return fichier; // Return the created Fichier object
-      } catch (error) {
-        console.error("Error creating Fichier record:", error);
-        throw error; // Throw the error to be caught by the error handler
-      }
-    });
-  
-    try {
-      // Wait for all the Fichier creation promises to resolve
-      const fichiers = await Promise.all(fichierPromises);
-  
-      // Send the response with the created Fichier objects
-      res.status(201).json({ data: fichiers });
-    } catch (error) {
-      // Handle any errors that occurred during Fichier creation
-      res.status(500).json({ error: error.message });
     }
   });
-  
+});
 
 // @desc    update specified Fichier
 // @route   PUT api/fichier/:id

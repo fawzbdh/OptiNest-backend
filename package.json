@@ -22,6 +22,7 @@
     "faker": "^6.6.6",
     "fs": "^0.0.1-security",
     "generate-password": "^1.7.0",
+    "iconv-lite": "^0.6.3",
     "jsonwebtoken": "^9.0.0",
     "mailgen": "^2.0.27",
     "morgan": "^1.10.0",
