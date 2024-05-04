@@ -30,7 +30,7 @@ exports.getFichier = asyncHandler(async (req, res, next) => {
 // @route   GET api/fichier/:fichierId
 // @access  Private
 exports.getFichiersByProjectId = asyncHandler(async (req, res, next) => {
-  const projectId = req.body.projectId;
+  const projectId = req.params.projectId;
 
   // Fetch fichiers associated with the specified fichier ID
   const fichiers = await Fichier.findAll({ where: { ProjectId: projectId } });
@@ -107,8 +107,9 @@ exports.createFichier = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.updateFichier = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const fichier = await Fichier.update(req.body, { where: { id: id } });
-  res.status(200).json({ message: true });
+   await Fichier.update(req.body, { where: { id: id } });
+  const updatedFichier = await Fichier.findOne({ where: { id: id } });
+  res.status(200).json({ data: updatedFichier });
 });
 
 // @desc    delete specified fichier

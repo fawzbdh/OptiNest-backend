@@ -2,13 +2,13 @@ const express = require("express");
 
 const {
 createFichier,deleteFichier,getFichier,getFichiers,getFichiersByProjectId,updateFichier
-} = require("../services/fichierService");
+} = require("../controllers/fichierController");
 
-const authService = require("../services/authService");
+const authService = require("../controllers/authController.js");
 
 const router = express.Router();
 router
-  .route("/byProjectId")
+  .route("/byProjectId/:projectId")
   .get(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),

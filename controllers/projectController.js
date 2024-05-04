@@ -73,8 +73,11 @@ exports.createProject = asyncHandler(async (req, res) => {
 // @access  Private
 exports.updateProject = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const project = await Project.update(req.body, { where: { id: id } });
-  res.status(200).json({ message: true });
+ await Project.update(req.body, { where: { id: id } });
+
+  const project = await Project.findOne({ where: { id: id } });
+
+  res.status(200).json({ data: project });
 });
 
 // @desc    delete specified project

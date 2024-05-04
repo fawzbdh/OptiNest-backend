@@ -7,46 +7,46 @@ const {
   updateProject,
   getProjects,
   getProjectsByUserId,
-} = require("../services/projectService");
+} = require("../controllers/projectController");
 
-const authService = require("../services/authService");
+const authController = require("../controllers/authController");
 
 const router = express.Router();
 router
   .route("/byUserId")
   .get(
-    authService.protect,
-    authService.allowedTo("admin", "utilisateur"),
+    authController.protect,
+    authController.allowedTo("admin", "utilisateur"),
     getProjectsByUserId
   );
 router
   .route("/")
   .get(
-    authService.protect,
-    authService.allowedTo("admin", "utilisateur"),
+    authController.protect,
+    authController.allowedTo("admin", "utilisateur"),
     getProjects
   )
   .post(
-    authService.protect,
-    authService.allowedTo("admin", "utilisateur"),
+    authController.protect,
+    authController.allowedTo("admin", "utilisateur"),
     createProject
   );
 
 router
   .route("/:id")
   .get(
-    authService.protect,
-    authService.allowedTo("admin", "utilisateur"),
+    authController.protect,
+    authController.allowedTo("admin", "utilisateur"),
     getProject
   )
   .put(
-    authService.protect,
-    authService.allowedTo("admin", "utilisateur"),
+    authController.protect,
+    authController.allowedTo("admin", "utilisateur"),
     updateProject
   )
   .delete(
-    authService.protect,
-    authService.allowedTo("admin", "utilisateur"),
+    authController.protect,
+    authController.allowedTo("admin", "utilisateur"),
     deleteProject
   );
 module.exports = router;

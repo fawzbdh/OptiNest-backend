@@ -8,7 +8,7 @@ const {
   login,
  
   
-} = require('../services/authService');
+} = require('../controllers/authController');
 
 const router = express.Router();
 router.post('/signup',signupValidator,signup);

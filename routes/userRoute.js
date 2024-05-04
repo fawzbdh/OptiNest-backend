@@ -13,8 +13,8 @@ const {
   getUsers,
   updateUser,
 
-} = require("../services/userService");
-const authService = require("../services/authService");
+} = require("../controllers/userController");
+const authController = require("../controllers/authController");
 
 const router = express.Router();
 
@@ -27,24 +27,24 @@ router.put(
 
 router
   .route("/")
-  .get(authService.protect, authService.allowedTo("admin"), getUsers);
+  .get(authController.protect, authController.allowedTo("admin"), getUsers);
 router
   .route("/:id")
   .get(
-    authService.protect,
-    authService.allowedTo("admin"),
+    authController.protect,
+    authController.allowedTo("admin"),
     getUserValidator,
     getUser
   )
   .put(
-    authService.protect,
-    authService.allowedTo("admin"),
+    authController.protect,
+    authController.allowedTo("admin"),
     updateUserValidator,
     updateUser
   )
   .delete(
-    authService.protect,
-    authService.allowedTo("admin"),
+    authController.protect,
+    authController.allowedTo("admin"),
     deleteUserValidator,
     deleteUser
   );
