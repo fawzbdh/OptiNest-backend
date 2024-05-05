@@ -28,17 +28,15 @@ exports.getProject = asyncHandler(async (req, res, next) => {
   const fileCount = await Fichier.findAll({ where: { ProjectId: id } });
 
   // Return the project data along with the file count
-  res
-    .status(200)
-    .json({
-      data: {
-        name: project.name,
-        steps: project.steps,
-        status: project.status,
-        id: project.id,
-        fileCount: fileCount.length,
-      },
-    });
+  res.status(200).json({
+    data: {
+      name: project.name,
+      steps: project.steps,
+      status: project.status,
+      id: project.id,
+      fileCount: fileCount.length,
+    },
+  });
 });
 
 // @desc    Get projects by user ID
@@ -73,7 +71,7 @@ exports.createProject = asyncHandler(async (req, res) => {
 // @access  Private
 exports.updateProject = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
- await Project.update(req.body, { where: { id: id } });
+  await Project.update(req.body, { where: { id: id } });
 
   const project = await Project.findOne({ where: { id: id } });
 
@@ -85,6 +83,13 @@ exports.updateProject = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.deleteProject = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const deletes = await Project.destroy({ where: { id: id } });
-  res.status(204).send();
+  const project = await Project.findByPk(id);
+  if (!project) {
+    return next(new ApiError(`Aucun project pour cet ID ${id}`, 404));
+  } else {
+    const deletedProject = { ...project.toJSON() };
+
+    await Project.destroy({ where: { id: id } });
+    res.status(200).json({ data: deletedProject });
+  }
 });

@@ -67,9 +67,16 @@ exports.deleteUser = asyncHandler(async (req, res, next) => {
   const user = await User.findByPk(id);
 
   if (!user) {
-    return next(new ApiError(`No User for this id ${id}`, 404));
+    return next(new ApiError(`Aucun utilisateur pour cet ID ${id}`, 404));
   } else {
+    // Store the user object before deleting it
+    const deletedUser = { ...user.toJSON() };
+    
+    // Delete the user
     await User.destroy({ where: { id: id } });
-    res.status(200).json({ message: "user deleted" });
+
+    // Return the deleted user in the response
+    res.status(200).json({ message: "Utilisateur supprimé",data : deletedUser });
   }
 });
+

@@ -5,32 +5,31 @@ const User = require("../../models").User;
 exports.signupValidator = [
   check("username")
     .notEmpty()
-    .withMessage("Username required")
+    .withMessage("Nom d'utilisateur requis")
     .isLength({ min: 3 })
-    .withMessage("Too short User name"),
+    .withMessage("Nom d'utilisateur trop court"),
   check("email")
     .notEmpty()
-    .withMessage("Email required")
+    .withMessage("Email requis")
     .isEmail()
-    .withMessage("Invalid email address")
+    .withMessage("Adresse email invalide")
     .custom((val) =>
       User.findOne({ where: { email: val } }).then((user) => {
         if (user) {
-          return Promise.reject(new Error("E-mail already in user"));
+          return Promise.reject(new Error("Adresse e-mail déjà utilisée"));
         }
       })
     ),
 
   check("password")
     .notEmpty()
-    .withMessage("Password required")
+    .withMessage("Mot de passe requis")
     .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters")
-,
+    .withMessage("Le mot de passe doit comporter au moins 6 caractères"),
 
   // check('passwordConfirm')
   //   .notEmpty()
-  //   .withMessage('Password confirmation required'),
+  //   .withMessage('Confirmation du mot de passe requise'),
 
   validatorMiddleware,
 ];
@@ -38,15 +37,15 @@ exports.signupValidator = [
 exports.loginValidator = [
   check("email")
     .notEmpty()
-    .withMessage("Email required")
+    .withMessage("Email requis")
     .isEmail()
-    .withMessage("Invalid email address"),
+    .withMessage("Adresse email invalide"),
 
   check("password")
     .notEmpty()
-    .withMessage("Password required")
+    .withMessage("Mot de passe requis")
     .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 characters"),
+    .withMessage("Le mot de passe doit comporter au moins 6 caractères"),
 
   validatorMiddleware,
 ];

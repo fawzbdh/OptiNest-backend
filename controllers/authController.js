@@ -8,7 +8,7 @@ const createToken = require("../utils/createToken");
 
 const User = require("../models").User;
 
-// @desc    Signup
+// @desc    Inscription
 // @route   GET /api/v1/auth/signup
 // @access  Public
 exports.signup = asyncHandler(async (req, res, next) => {
@@ -19,36 +19,36 @@ exports.signup = asyncHandler(async (req, res, next) => {
     password: req.body.password,
   });
 
-  // 2- Generate token
+  // 2- Générer un jeton
   const token = createToken(user.id);
 
   res.status(201).json({ data: user, token });
 });
 
-// @desc    Login
+// @desc    Connexion
 // @route   GET /api/v1/auth/login
 // @access  Public
 exports.login = asyncHandler(async (req, res, next) => {
-  // 1) check if password and email in the body (validation)
-  // 2) check if user exist & check if password is correct
+  // 1) Vérifier si le mot de passe et l'email sont présents (validation)
+  // 2) Vérifier si l'utilisateur existe et si le mot de passe est correct
   const user = await User.findOne({ where: { email: req.body.email } });
 
   if (!user) {
-    return next(new ApiError("Incorrect email or password", 401));
+    return next(new ApiError("Email ou mot de passe incorrect", 401));
   }
   if (!(await bcrypt.compare(req.body.password, user.password))) {
-    return next(new ApiError("Incorrect password", 401));
+    return next(new ApiError("Mot de passe incorrect", 401));
   }
-  // 3) generate token
+  // 3) Générer un jeton
   const token = createToken(user.id);
 
-  // Delete password from response
+  // Supprimer le mot de passe de la réponse
   const { password: _, ...userWithoutPassword } = user.toJSON();
-  // 4) send response to client side
+  // 4) Envoyer la réponse au côté client
   res.status(200).json({ data: userWithoutPassword, token });
 });
 
-// @desc   make sure the user is logged in
+// @desc   Assurer que l'utilisateur est connecté
 exports.protect = asyncHandler(async (req, res, next) => {
   let token;
   if (
@@ -58,168 +58,67 @@ exports.protect = asyncHandler(async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
 
-  // If token doesn't exist, return an error
+  // Si le jeton n'existe pas, renvoyer une erreur
   if (!token) {
     return next(
       new ApiError(
-        "You are not logged in. Please log in to access this route",
+        "Vous n'êtes pas connecté. Veuillez vous connecter pour accéder à cette route",
         401
       )
     );
   }
 
   try {
-    // Verify token and extract user ID from it
+    // Vérifier le jeton et extraire l'ID de l'utilisateur
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-    // Check if user exists
+    // Vérifier si l'utilisateur existe
     const currentUser = await User.findByPk(decoded.userId);
     if (!currentUser) {
       return next(
-        new ApiError("The user that belongs to this token does not exist", 401)
+        new ApiError(
+          "L'utilisateur auquel appartient ce jeton n'existe pas",
+          401
+        )
       );
     }
 
-    // Check if user changed his password after token creation
+    // Vérifier si l'utilisateur a changé son mot de passe après la création du jeton
     if (currentUser.passwordChangedAt) {
       const passChangedTimestamp = parseInt(
         currentUser.passwordChangedAt.getTime() / 1000,
         10
       );
-      // Password changed after token created (Error)
+      // Mot de passe changé après la création du jeton (Erreur)
       if (passChangedTimestamp > decoded.iat) {
         return next(
           new ApiError(
-            "User recently changed his password. Please log in again.",
+            "L'utilisateur a récemment changé son mot de passe. Veuillez vous reconnecter.",
             401
           )
         );
       }
     }
 
-    // Attach user information to req.user object
+    // Attacher les informations de l'utilisateur à l'objet req.user
     req.user = currentUser;
     next();
   } catch (error) {
-    // Handle token verification errors
-    return next(new ApiError("Invalid token. Please log in again.", 401));
+    // Gérer les erreurs de vérification du jeton
+    return next(
+      new ApiError("Jeton invalide. Veuillez vous reconnecter.", 401)
+    );
   }
 });
+
 exports.allowedTo = (...roles) =>
   asyncHandler(async (req, res, next) => {
-    // 1) access roles
-    // 2) access registered user (req.user.role)
+    // 1) Rôles d'accès
+    // 2) Accès utilisateur enregistré (req.user.role)
     if (!roles.includes(req.user.role)) {
       return next(
-        new ApiError("You are not allowed to access this route", 403)
+        new ApiError("Vous n'êtes pas autorisé à accéder à cette route", 403)
       );
     }
     next();
   });
-
-// // @desc    Authorization (User Permissions)
-// // ["admin", "manager"]
-
-// // @desc    Forgot password
-// // @route   POST /api/v1/auth/forgotPassword
-// // @access  Public
-// exports.forgotPassword = asyncHandler(async (req, res, next) => {
-//   // 1) Get user by email
-//   const user = await User.findOne({where:{ email: req.body.email }});
-//   if (!user) {
-//     return next(
-//       new ApiError(`There is no user with that email ${req.body.email}`, 404)
-//     );
-//   }
-//   // 2) If user exist, Generate hash reset random 6 digits and save it in db
-//   const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
-//   const hashedResetCode = crypto
-//     .createHash('sha256')
-//     .update(resetCode)
-//     .digest('hex');
-
-//   // Save hashed password reset code into db
-//   user.passwordResetCode = hashedResetCode;
-//   // Add expiration time for password reset code (10 min)
-//   user.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-//   user.passwordResetVerified = false;
-
-//   await user.save();
-
-//   // 3) Send the reset code via email
-//   const message = `Hi ${user.name},\n We received a request to reset the password on your E-shop Account. \n ${resetCode} \n Enter this code to complete the reset. \n Thanks for helping us keep your account secure.\n The E-shop Team`;
-//   try {
-//     await sendEmail({
-//       email: user.email,
-//       subject: 'Your password reset code (valid for 10 min)',
-//       message,
-//     });
-//   } catch (err) {
-//     user.passwordResetCode = undefined;
-//     user.passwordResetExpires = undefined;
-//     user.passwordResetVerified = undefined;
-
-//     await user.save();
-//     return next(new ApiError('There is an error in sending email', 500));
-//   }
-
-//   res
-//     .status(200)
-//     .json({ status: 'Success', message: 'Reset code sent to email' });
-// });
-
-// // @desc    Verify password reset code
-// // @route   POST /api/v1/auth/verifyResetCode
-// // @access  Public
-// exports.verifyPassResetCode = asyncHandler(async (req, res, next) => {
-//   // 1) Get user based on reset code
-//   const hashedResetCode = crypto
-//     .createHash('sha256')
-//     .update(req.body.resetCode)
-//     .digest('hex');
-
-//   const user = await User.findOne({
-//     passwordResetCode: hashedResetCode,
-//     passwordResetExpires: { $gt: Date.now() },
-//   });
-//   if (!user) {
-//     return next(new ApiError('Reset code invalid or expired'));
-//   }
-
-//   // 2) Reset code valid
-//   user.passwordResetVerified = true;
-//   await user.save();
-
-//   res.status(200).json({
-//     status: 'Success',
-//   });
-// });
-
-// // @desc    Reset password
-// // @route   POST /api/v1/auth/resetPassword
-// // @access  Public
-// exports.resetPassword = asyncHandler(async (req, res, next) => {
-//   // 1) Get user based on email
-//   const user = await User.findOne({where:{ email: req.body.email }});
-//   if (!user) {
-//     return next(
-//       new ApiError(`There is no user with email ${req.body.email}`, 404)
-//     );
-//   }
-
-//   // 2) Check if reset code verified
-//   if (!user.passwordResetVerified) {
-//     return next(new ApiError('Reset code not verified', 400));
-//   }
-
-//   user.password = req.body.newPassword;
-//   user.passwordResetCode = undefined;
-//   user.passwordResetExpires = undefined;
-//   user.passwordResetVerified = undefined;
-
-//   await user.save();
-
-//   // 3) if everything is ok, generate token
-//   const token = createToken(user._id);
-//   res.status(200).json({ token });
-// });
