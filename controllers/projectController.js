@@ -35,6 +35,7 @@ exports.getProject = asyncHandler(async (req, res, next) => {
       status: project.status,
       id: project.id,
       fileCount: fileCount.length,
+      feedback: project.feedback,
     },
   });
 });

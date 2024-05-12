@@ -1,4 +1,5 @@
 const { sequelize } = require("sequelize");
+const FeedBack = require("./FeedBack");
 
 module.exports = (sequelize, DataTypes) => {
   const Project = sequelize.define(
@@ -16,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      feedback:{
+        type: DataTypes.STRING,
+        allowNull: true,
+      }
+      
     },
     {
       timestamps: true,
