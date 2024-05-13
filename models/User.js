@@ -41,18 +41,11 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.associate = (models) => {
-    // User.belongsTo(models.Camion,{
-    //     allowNull:true
-    // })
-    // User.belongsTo(models.Etablissement,{
-    //     allowNull:true
-    // })
+
     User.hasMany(models.Project, {
       onDelete: "cascade",
     });
-    User.hasMany(models.Feedback, {
-      onDelete: "cascade",
-    });
+
   };
 
   return User;

@@ -1,8 +1,8 @@
 const express = require("express");
 
 const {
-createFichier,deleteFichier,getFichier,getFichiers,getFichiersByProjectId,updateFichier
-} = require("../controllers/fichierController");
+createFormat,deleteFormat,getFormat,getFormats,getFormatsByProjectId,updateFormat,createMultipleFormat
+} = require("../controllers/formatController.js");
 
 const authService = require("../controllers/authController.js");
 
@@ -12,19 +12,26 @@ router
   .get(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    getFichiersByProjectId
+    getFormatsByProjectId
+  );
+  router
+  .route("/multiple/:ProjectId")
+  .post(
+    authService.protect,
+    authService.allowedTo("admin", "utilisateur"),
+    createMultipleFormat
   );
 router
   .route("/")
   .get(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    getFichiers
+    getFormats
   )
   .post(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    createFichier
+    createFormat
   );
 
 router
@@ -32,16 +39,16 @@ router
   .get(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    getFichier
+    getFormat
   )
   .put(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    updateFichier
+    updateFormat
   )
   .delete(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    deleteFichier
+    deleteFormat
   );
 module.exports = router;

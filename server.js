@@ -5,11 +5,6 @@ const globalError = require("./middlewares/errorMiddleware");
 const db = require("./models");
 const app = express();
 const path = require("path");
-const multer = require('multer');
-const { v4: uuidv4 } = require("uuid"); // Import UUID module
-
-const upload = multer({ dest: 'uploads/' });
-const { spawn } = require('child_process');
 
 const cors = require("cors");
 const compression = require("compression");
@@ -20,7 +15,7 @@ app.use(express.json());
 app.use(cors());
 app.options("*", cors());
 app.use(compression());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
   console.log("mode : dev");
@@ -35,12 +30,15 @@ const authRoute = require("./routes/authRoute");
 
 const projectRoute = require("./routes/projectRoute");
 const fichierRoute = require("./routes/fichierRoute");
-
+const containerRoute = require("./routes/containerRoute");
+const formatRoute = require("./routes/formatRoute");
 
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/project", projectRoute);
 app.use("/api/fichier", fichierRoute);
+app.use("/api/format", formatRoute);
+app.use("/api/container", containerRoute);
 
 // app.post('/api/fichier', upload.array('files', 5), (req, res) => {
 //   const uploadedFiles = req.files;

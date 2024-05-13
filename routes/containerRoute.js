@@ -1,8 +1,13 @@
 const express = require("express");
 
 const {
-createFichier,deleteFichier,getFichier,getFichiers,getFichiersByProjectId,updateFichier
-} = require("../controllers/fichierController");
+  createContainer,
+  deleteContainer,
+  getContainer,
+  getContainers,
+  getContainersByProjectId,
+  updateContainer,
+} = require("../controllers/containerController.js");
 
 const authService = require("../controllers/authController.js");
 
@@ -12,19 +17,19 @@ router
   .get(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    getFichiersByProjectId
+    getContainersByProjectId
   );
 router
   .route("/")
   .get(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    getFichiers
+    getContainers
   )
   .post(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    createFichier
+    createContainer
   );
 
 router
@@ -32,16 +37,16 @@ router
   .get(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    getFichier
+    getContainer
   )
   .put(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    updateFichier
+    updateContainer
   )
   .delete(
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
-    deleteFichier
+    deleteContainer
   );
 module.exports = router;

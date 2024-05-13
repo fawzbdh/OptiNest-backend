@@ -7,6 +7,7 @@ const { v4: uuidv4 } = require("uuid"); // Import UUID module
 const path = require("path");
 const { spawn } = require("child_process");
 const iconv = require("iconv-lite");
+const fs = require('fs');
 
 // @route   GET api/fichier/
 // @access  Private

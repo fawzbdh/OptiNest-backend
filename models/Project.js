@@ -1,5 +1,4 @@
 const { sequelize } = require("sequelize");
-const FeedBack = require("./FeedBack");
 
 module.exports = (sequelize, DataTypes) => {
   const Project = sequelize.define(
@@ -34,6 +33,13 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "cascade",
     });
     Project.hasMany(models.Fichier, {
+      onDelete: "cascade",
+    });
+
+    Project.hasMany(models.Format, {
+      onDelete: "cascade",
+    });
+    Project.hasMany(models.Container, {
       onDelete: "cascade",
     });
   };
