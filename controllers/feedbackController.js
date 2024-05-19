@@ -70,7 +70,15 @@ exports.updateFeedback = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   await Feedback.update(req.body, { where: { id: id } });
 
-  const feedback = await Feedback.findOne({ where: { id: id } });
+  const feedback = await Feedback.findOne({
+    where: { id: id },
+    include: [
+      {
+        model: User,
+        attributes: ["username"],
+      },
+    ],
+  });
 
   res.status(200).json({ data: feedback });
 });

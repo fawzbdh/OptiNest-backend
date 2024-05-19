@@ -16,10 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
-      priority: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
+
       quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,

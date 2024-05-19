@@ -35,10 +35,10 @@ exports.getContainer = asyncHandler(async (req, res, next) => {
 // @route   GET api/user/:userId
 // @access  Private
 exports.getContainersByProjectId = asyncHandler(async (req, res, next) => {
-  const projectId = req.params.id;
+  const projectId = req.params.projectId;
 
   // Fetch containers associated with the specified user ID
-  const containers = await Container.findAll({ where: { ProjectId: projectId } });
+  const containers = await Container.findAll({ where: { ProjectId : projectId } });
 
   res.status(200).json({ results: containers.length, data: containers });
 });

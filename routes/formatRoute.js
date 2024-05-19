@@ -1,6 +1,7 @@
 const express = require("express");
 
 const {
+  updateMultipleFormats,
 createFormat,deleteFormat,getFormat,getFormats,getFormatsByProjectId,updateFormat,createMultipleFormat
 } = require("../controllers/formatController.js");
 
@@ -13,6 +14,13 @@ router
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
     getFormatsByProjectId
+  );
+  router
+  .route("/updateMultiple")
+  .put(
+    authService.protect,
+    authService.allowedTo("admin", "utilisateur"),
+    updateMultipleFormats
   );
   router
   .route("/multiple/:ProjectId")

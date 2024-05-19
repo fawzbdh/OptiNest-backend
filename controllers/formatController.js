@@ -33,10 +33,10 @@ exports.getFormat = asyncHandler(async (req, res, next) => {
 // @route   GET api/user/:userId
 // @access  Private
 exports.getFormatsByProjectId = asyncHandler(async (req, res, next) => {
-  const userId = req.user.id;
+  const projectId = req.params.projectId;
 
   // Fetch formats associated with the specified user ID
-  const formats = await Format.findAll({ where: { ProjectId: userId } });
+  const formats = await Format.findAll({ where: { ProjectId: projectId } });
 
   res.status(200).json({ results: formats.length, data: formats });
 });
@@ -60,19 +60,19 @@ exports.createFormat = asyncHandler(async (req, res) => {
 // @route   POST api/user/multiple
 // @access  Private
 exports.createMultipleFormat = asyncHandler(async (req, res) => {
-  const formatsData = req.body;
+  const formatsData = req.body.formatsData;
   const ProjectId = req.params.ProjectId;
-
   // Array to store the created formats
   const createdFormats = [];
+  console.log("formatsData", formatsData);
+  console.log("ProjectId", ProjectId);
 
   // Iterate over each format data and create a new format
   for (const formatData of formatsData) {
     const format = await Format.create({
-      nom: formatData.nom,
+      nom: formatData.name,
       hauteur: formatData.hauteur,
       largeur: formatData.largeur,
-      priority: formatData.priority,
       quantity: formatData.quantity,
       ProjectId: ProjectId,
     });
@@ -93,7 +93,29 @@ exports.updateFormat = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({ data: format });
 });
+exports.updateMultipleFormats = asyncHandler(async (req, res, next) => {
+  const formats = req.body; // Assume body contains an array of format objects
 
+  if (!Array.isArray(formats)) {
+    return res.status(400).json({ message: 'Invalid data format. Expected an array of formats.' });
+  }
+
+  const updatedFormats = [];
+
+  for (const formatData of formats) {
+    const { id, ...updateData } = formatData;
+
+    await Format.update(updateData, { where: { id } });
+
+    const updatedFormat = await Format.findOne({ where: { id } });
+
+    if (updatedFormat) {
+      updatedFormats.push(updatedFormat);
+    }
+  }
+
+  res.status(200).json({ data: updatedFormats });
+});
 // @desc    delete specified format
 // @route   DELETE api/user/:id
 // @access  Private

@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     Project.hasMany(models.Feedback, {
       onDelete: "cascade",
     });
-    Project.hasMany(models.Container, {
+    Project.hasOne(models.Container, {
       onDelete: "cascade",
     });
   };
