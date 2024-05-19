@@ -32,6 +32,7 @@ const projectRoute = require("./routes/projectRoute");
 const fichierRoute = require("./routes/fichierRoute");
 const containerRoute = require("./routes/containerRoute");
 const formatRoute = require("./routes/formatRoute");
+const feedbackRoute = require("./routes/feedbackRoute");
 
 app.use("/api/user", userRoute);
 app.use("/api/auth", authRoute);
@@ -39,6 +40,7 @@ app.use("/api/project", projectRoute);
 app.use("/api/fichier", fichierRoute);
 app.use("/api/format", formatRoute);
 app.use("/api/container", containerRoute);
+app.use("/api/feedback", feedbackRoute);
 
 // app.post('/api/fichier', upload.array('files', 5), (req, res) => {
 //   const uploadedFiles = req.files;

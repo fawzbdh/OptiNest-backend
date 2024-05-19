@@ -82,7 +82,7 @@ exports.createMultipleFormat = asyncHandler(async (req, res) => {
   res.status(201).json({ data: createdFormats });
 });
 
-// @desc    update specified Format
+// @desc    update specified Format,f velfk
 // @route   PUT api/user/:id
 // @access  Private
 exports.updateFormat = asyncHandler(async (req, res, next) => {

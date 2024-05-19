@@ -16,10 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      feedback:{
-        type: DataTypes.STRING,
-        allowNull: true,
-      }
+     
       
     },
     {
@@ -37,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Project.hasMany(models.Format, {
+      onDelete: "cascade",
+    });
+    Project.hasMany(models.Feedback, {
       onDelete: "cascade",
     });
     Project.hasMany(models.Container, {
