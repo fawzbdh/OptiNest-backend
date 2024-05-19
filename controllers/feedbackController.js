@@ -1,4 +1,5 @@
 const Feedback = require("../models").Feedback;
+const User = require("../models").User;
 
 const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
@@ -33,10 +34,18 @@ exports.getFeedback = asyncHandler(async (req, res, next) => {
 // @route   GET api/feedback/:userId
 // @access  Private
 exports.getFeedbacksByProjectId = asyncHandler(async (req, res, next) => {
-  const projectId = req.params.id;
+  const projectId = req.params.projectId;
 
   // Fetch feedbacks associated with the specified user ID
-  const feedbacks = await Feedback.findAll({ where: { ProjectId: projectId } });
+  const feedbacks = await Feedback.findAll({
+    where: { ProjectId: projectId },
+    include: [
+      {
+        model: User,
+        attributes: ["username"],
+      },
+    ],
+  });
 
   res.status(200).json({ results: feedbacks.length, data: feedbacks });
 });
@@ -48,10 +57,10 @@ exports.createFeedback = asyncHandler(async (req, res) => {
   const body = req.body;
   const feedback = await Feedback.create({
     description: body.description,
-
+    UserId: body.UserId,
     ProjectId: body.ProjectId,
   });
-  res.status(201).json({ data: feedback });
+  res.status(201).json({ data: feedback.dataValues });
 });
 
 // @desc    update specified Feedback

@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     Feedback.belongsTo(models.Project, {
       onDelete: "cascade",
     });
+    Feedback.belongsTo(models.User, {
+      onDelete: "cascade",
+    });
   };
 
   return Feedback;

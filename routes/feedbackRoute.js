@@ -1,7 +1,12 @@
 const express = require("express");
 
 const {
-createFeedback,deleteFeedback,getFeedback,getFeedbacks,getFeedbacksByProjectId,updateFeedback
+  createFeedback,
+  deleteFeedback,
+  getFeedback,
+  getFeedbacks,
+  getFeedbacksByProjectId,
+  updateFeedback,
 } = require("../controllers/feedbackController");
 
 const authService = require("../controllers/authController.js");

@@ -41,11 +41,12 @@ module.exports = (sequelize, DataTypes) => {
   );
 
   User.associate = (models) => {
-
     User.hasMany(models.Project, {
       onDelete: "cascade",
     });
-
+    User.hasMany(models.Feedback, {
+      onDelete: "cascade",
+    });
   };
 
   return User;
