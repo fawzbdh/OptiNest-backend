@@ -60,7 +60,16 @@ exports.createFeedback = asyncHandler(async (req, res) => {
     UserId: body.UserId,
     ProjectId: body.ProjectId,
   });
-  res.status(201).json({ data: feedback.dataValues });
+  const feedbackById = await Feedback.findOne({
+    where: { id: feedback.dataValues.id },
+    include: [
+      {
+        model: User,
+        attributes: ["username"],
+      },
+    ],
+  });
+  res.status(201).json({ data: feedbackById });
 });
 
 // @desc    update specified Feedback

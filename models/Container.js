@@ -4,20 +4,16 @@ module.exports = (sequelize, DataTypes) => {
   const Container = sequelize.define(
     "Container",
     {
-      ecart_top: {
+      offset: {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
-      ecart_right: {
+      mergs: {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
-      ecart_left: {
-        type: DataTypes.DOUBLE,
-        allowNull: false,
-      },
-      ecart_bottom: {
-        type: DataTypes.DOUBLE,
+      vertical: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
       },
     },

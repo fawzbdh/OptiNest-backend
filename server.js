@@ -42,35 +42,7 @@ app.use("/api/format", formatRoute);
 app.use("/api/container", containerRoute);
 app.use("/api/feedback", feedbackRoute);
 
-// app.post('/api/fichier', upload.array('files', 5), (req, res) => {
-//   const uploadedFiles = req.files;
-//   const fileResponses = [];
 
-//   uploadedFiles.forEach((file) => {
-//     const dxfFilePath = file.path;
-//     const uniqueFileName = `${uuidv4()}.png`;
-//     const imageFilePath = path.join(__dirname, 'uploads', uniqueFileName);
-//     const baseUrl = 'http://localhost:8000';
-
-//     const pythonProcess = spawn('python', ['parse_dxf.py', dxfFilePath, imageFilePath]);
-
-//     pythonProcess.stdout.on('data', (data) => {
-//       const dimensions = JSON.parse(data);
-//       const imagePath = `${baseUrl}/uploads/${uniqueFileName}`;
-//       fileResponses.push({ width: dimensions.width, height: dimensions.height, imagePath, projectId: dimensions.projectId });
-
-//       if (fileResponses.length === uploadedFiles.length) {
-//         res.json(fileResponses);
-//       }
-//     });
-
-//     pythonProcess.stderr.on('data', (data) => {
-//       console.error('Python error:', data.toString());
-//       res.status(500).send('Error parsing DXF');
-//     });
-//   });
-// });
-//static Images Folder
 
 app.all("*", (req, res, next) => {
   next(new ApiError(`can't find this route : ${req.originalUrl}`, 400));
@@ -80,7 +52,7 @@ app.use(globalError);
 const port = process.env.PORT || 8000;
 
 const server = app.listen(8000, () =>
-  console.log(`Example app listening on port ${8000}!`)
+  console.log(`Example app listening on  http://localhost:${8000}`)
 );
 db.sequelize.sync().then(() => {
   app.listen(port, () =>

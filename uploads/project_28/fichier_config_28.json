@@ -1,0 +1,19 @@
+{
+  "files": [
+    {
+      "id": 198,
+      "filename": "http://localhost:8000/uploads/project_28/rect100X20.DXF",
+      "priority": 2
+    },
+    {
+      "id": 199,
+      "filename": "http://localhost:8000/uploads/project_28/carre40X40.DXF",
+      "quantity": 4
+    },
+    {
+      "id": 200,
+      "filename": "http://localhost:8000/uploads/project_28/CARRE100X100.DXF",
+      "priority": 3
+    }
+  ]
+}

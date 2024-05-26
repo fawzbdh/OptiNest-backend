@@ -1,7 +1,7 @@
 const express = require("express");
 
 const {
-createFichier,deleteFichier,getFichier,getFichiers,getFichiersByProjectId,updateFichier
+createFichier,deleteFichier,getFichier,getFichiers,getFichiersByProjectId,updateFichier,createCsvFile,optimisation
 } = require("../controllers/fichierController");
 
 const authService = require("../controllers/authController.js");
@@ -13,6 +13,21 @@ router
     authService.protect,
     authService.allowedTo("admin", "utilisateur"),
     getFichiersByProjectId
+  );
+  router
+  .route("/csv/:projectId")
+  .post(
+    // authService.protect,
+    // authService.allowedTo("admin", "utilisateur"),
+    createCsvFile
+  );
+  router
+  .route("/optimisation/:projectId")
+  .post(
+    // authService.protect,
+    // authService.allowedTo("admin", "utilisateur"),
+    optimisation
+
   );
 router
   .route("/")
