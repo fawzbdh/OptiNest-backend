@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
     Format.belongsTo(models.Project, {
       onDelete: "cascade",
     });
+    Format.hasMany(models.Resultat, {
+      onDelete: "cascade",
+    });
   };
 
   return Format;

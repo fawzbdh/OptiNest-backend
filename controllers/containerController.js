@@ -49,9 +49,9 @@ exports.getContainersByProjectId = asyncHandler(async (req, res, next) => {
 exports.createContainer = asyncHandler(async (req, res) => {
   const body = req.body;
   const container = await Container.create({
-    offset: body.offset,
-    mergs: body.merge ,
-    verticale: body.verticale ,
+    x: body.x,
+    y: body.y ,
+    vertical: body.vertical ,
     ProjectId: body.ProjectId,
   });
   res.status(201).json({ data: container });

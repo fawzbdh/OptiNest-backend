@@ -1,4 +1,7 @@
 const Fichier = require("../models").Fichier;
+const Container = require("../models").Container;
+const Resultat = require("../models").Resultat;
+
 const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
 const multer = require("multer");
@@ -8,6 +11,7 @@ const path = require("path");
 const { spawn } = require("child_process");
 const iconv = require("iconv-lite");
 const fs = require("fs");
+const Format = require("../models").Format;
 
 // @route   GET api/fichier/
 // @access  Private
@@ -161,103 +165,148 @@ exports.updateFichier = asyncHandler(async (req, res, next) => {
     return next(new ApiError("Fichier not found", 404));
   }
 
-  // Read the existing configuration file
-  const projectId = updatedFichier.ProjectId;
-  const configFilePath = path.join(
-    __dirname,
-    "..",
-    "uploads",
-    `project_${projectId}`,
-    `fichier_config_${projectId}.json`
-  );
-
-  let configData = [];
-  try {
-    const configFileContent = fs.readFileSync(configFilePath, "utf8");
-    configData = JSON.parse(configFileContent);
-  } catch (err) {
-    console.error("Error reading configuration file:", err);
-    return next(new ApiError("Error updating files configuration", 500));
-  }
-
-  // Find the entry corresponding to the updated file in the configuration data
-  const updatedEntryIndex = configData.files.findIndex(
-    (entry) => entry.id === parseInt(id)
-  );
-  if (updatedEntryIndex !== -1) {
-    // Update quantity and priority values, or set default values if not provided
-    configData.files[updatedEntryIndex].quantity =
-      quantity !== undefined
-        ? quantity
-        : configData.files[updatedEntryIndex].quantity;
-    configData.files[updatedEntryIndex].priority =
-      priority !== undefined
-        ? priority
-        : configData.files[updatedEntryIndex].priority;
-  } else {
-    console.error("File entry not found in configuration file.");
-    return next(new ApiError("Error updating files configuration", 500));
-  }
-
-  // Write the updated configuration data back to the file
-  try {
-    fs.writeFileSync(configFilePath, JSON.stringify(configData, null, 2));
-  } catch (err) {
-    console.error("Error writing configuration file:", err);
-    return next(new ApiError("Error updating files configuration", 500));
-  }
-
   res.status(200).json({ data: updatedFichier });
 });
 exports.createCsvFile = asyncHandler(async (req, res, next) => {
   const projectId = req.params.projectId;
-  const projectDir = path.join(__dirname, '..', 'uploads', `project_${projectId}`);
-  const pythonProcess = spawn('python', [
-    'dxf_to_poly.py',
-    path.join(projectDir, `fichier_config_${projectId}.json`), // Pass the configuration file path
-    projectDir // Pass the output directory
-  ]);
-  console.log(path.join(projectDir, `fichier_config_${projectId}.json`));
-  console.log(projectDir);
+  const projectDir = path.join(
+    __dirname,
+    "..",
+    "uploads",
+    `project_${projectId}`
+  );
 
+  try {
+    const fichiers = await Fichier.findAll({
+      where: { ProjectId: projectId },
+    });
 
-  pythonProcess.stderr.on('data', (data) => {
-    console.error('Python error:', data.toString());
-    return next(new ApiError('Error creating CSV file', 500));
-  });
+    const fichiersData = fichiers.map((fichier) => fichier.dataValues); // Extract data values
 
-  pythonProcess.on('close', (code) => {
-    if (code === 0) {
-      res.status(201).json({ message: 'success' });
-    } else {
-      console.error('Python process exited with code', code);
-      return next(new ApiError('Error creating CSV file', 500));
-    }
-  });
+    const pythonProcess = spawn("python", [
+      "dxf_to_poly.py",
+      JSON.stringify({ files: fichiersData }), // Pass the configuration data as a JSON string
+      projectDir,
+      projectId,
+    ]);
+
+    pythonProcess.stdout.on("data", (data) => {
+      console.log(`Python output: ${data.toString()}`);
+    });
+
+    pythonProcess.stderr.on("data", (data) => {
+      console.error("Python error:", data.toString());
+    });
+
+    pythonProcess.on("close", (code) => {
+      if (code === 0) {
+        res.status(201).json({ message: "success" });
+      } else {
+        console.error("Python process exited with code", code);
+        return next(new ApiError("Error creating CSV file", 500));
+      }
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    next(new ApiError("Internal server error", 500));
+  }
 });
 exports.optimisation = asyncHandler(async (req, res, next) => {
   const projectId = req.params.projectId;
-  const projectDir = path.join(__dirname, '..', 'uploads', `project_${projectId}`);
-  const pythonProcess = spawn('python', [
-    'NEWCUMA.py',
+  const projectDir = path.join(
+    __dirname,
+    "..",
+    "uploads",
+    `project_${projectId}`
+  );
+  const container = await Container.findOne({
+    where: { ProjectId: projectId },
+  });
+  const formats = await Format.findAll({ where: { ProjectId: projectId } });
+
+  if (!container) {
+    return next(new ApiError("Container not found", 404));
+  }
+  if (formats.length === 0) {
+    return next(new ApiError("Formats not found", 404));
+  }
+
+  const transformedData = [];
+  formats.forEach((format) => {
+    for (let i = 0; i < format.quantity; i++) {
+      transformedData.push({
+        formatId: format.id,
+        width: format.largeur,
+        length: format.hauteur,
+        vertical: container.vertical,
+        x: container.x,
+        y: container.y,
+      });
+    }
+  });
+  // Delete existing results for the same projectId
+  await Resultat.destroy({
+    where: { ProjectId: projectId },
+  });
+  const pythonProcess = spawn("python", [
+    "NEWCUMA.py",
     path.join(projectDir, `output_points.csv`), // Pass the configuration file path
-    projectDir // Pass the output directory
+    projectDir, // Pass the output directory
+    JSON.stringify(transformedData),
   ]);
-  console.log(path.join(projectDir, `output_points.csv`));
-  console.log(projectDir);
 
+  let pythonOutput = "";
 
-  pythonProcess.stderr.on('data', (data) => {
-    console.error('Python error:', data.toString());
-    return next(new ApiError('Error optimisation CSV file', 500));
+  pythonProcess.stdout.on("data", (data) => {
+    pythonOutput += data.toString();
   });
 
-  pythonProcess.on('close', (code) => {
-    if (code === 0) {
-      res.status(201).json({ message: 'success' });
-    } else {
-      console.error('Python process exited with code', code);
-      return next(new ApiError('Error optimisation CSV file', 500));
+  pythonProcess.stderr.on("data", (data) => {
+    console.error(`stderr: ${data}`);
+  });
+
+  pythonProcess.on("close", (code) => {
+    if (code !== 0) {
+      return res.status(500).json({
+        status: "error",
+        message: "Python script failed",
+      });
+    }
+
+    try {
+      console.log("Raw Python output:", pythonOutput); // Log raw output for debugging
+
+      // Extract only the JSON part of the output
+      const jsonMatch = pythonOutput.match(/\[.*\]/s);
+      if (!jsonMatch) {
+        throw new Error("No valid JSON found in Python output");
+      }
+      const results = JSON.parse(jsonMatch[0]);
+
+      const savePromises = results.map((result) => {
+        return Resultat.create({
+          fichier_dxf: result.fichier_dxf,
+          url_image: result.url_image,
+          ProjectId: projectId,
+          FormatId: result.formatId,
+        });
+      });
+
+      Promise.all(savePromises)
+        .then(() => res.status(200).json({ status: "success", results }))
+        .catch((err) => {
+          console.error(err);
+          res.status(500).json({
+            status: "error",
+            message: "Failed to save results to the database",
+          });
+        });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        status: "error",
+        message: "Error parsing Python output",
+      });
     }
   });
 });

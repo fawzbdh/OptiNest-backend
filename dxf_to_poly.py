@@ -8,17 +8,6 @@ import requests
 import tempfile
 from urllib.parse import unquote
 
-def load_config(config_file):
-    try:
-        with open(config_file, 'r') as file:
-            return json.load(file)
-    except FileNotFoundError:
-        print("Config file not found.")
-        sys.exit(1)
-    except json.JSONDecodeError:
-        print("Invalid JSON format in config file.")
-        sys.exit(1)
-        
 def download_dxf(url):
     response = requests.get(url)
     if response.status_code == 200:
@@ -99,12 +88,12 @@ def extract_points_from_dxf(dxf_file):
 
     return polygons
 
-def process_files(config, output_dir):
+def process_files(config, output_dir,projet_id):
     files = sorted(config['files'], key=lambda x: x['priority'])
     output_data = []
 
     for file_info in files:
-        filename = file_info['filename']
+        filename = "http://localhost:8000/uploads/project_"+projet_id+"/"+ file_info['name']
         quantity = file_info['quantity']
         encoded_filename = unquote(filename)
         print("Processing file:", encoded_filename)
@@ -135,7 +124,9 @@ def process_files(config, output_dir):
             })
 
 if __name__ == '__main__':
-     config_file_path = sys.argv[1]
-     output_dir = sys.argv[2]
-     config = load_config(config_file_path)
-     process_files(config, output_dir)
+    config_json = sys.argv[1]
+    output_dir = sys.argv[2]
+    projet_id = sys.argv[3]
+
+    config = json.loads(config_json)  # Load the JSON string into a dictionary
+    process_files(config, output_dir,projet_id)

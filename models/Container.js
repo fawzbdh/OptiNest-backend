@@ -4,11 +4,11 @@ module.exports = (sequelize, DataTypes) => {
   const Container = sequelize.define(
     "Container",
     {
-      offset: {
+      x: {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
-      mergs: {
+      y: {
         type: DataTypes.DOUBLE,
         allowNull: false,
       },
