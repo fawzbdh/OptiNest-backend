@@ -212,103 +212,109 @@ exports.createCsvFile = asyncHandler(async (req, res, next) => {
   }
 });
 exports.optimisation = asyncHandler(async (req, res, next) => {
-  const projectId = req.params.projectId;
-  const projectDir = path.join(
-    __dirname,
-    "..",
-    "uploads",
-    `project_${projectId}`
-  );
-  const container = await Container.findOne({
-    where: { ProjectId: projectId },
-  });
-  const formats = await Format.findAll({ where: { ProjectId: projectId } });
+  try {
+    const projectId = req.params.projectId;
+    const projectDir = path.join(
+      __dirname,
+      "..",
+      "uploads",
+      `project_${projectId}`
+    );
+    const container = await Container.findOne({
+      where: { ProjectId: projectId },
+    });
+    const formats = await Format.findAll({ where: { ProjectId: projectId } });
 
-  if (!container) {
-    return next(new ApiError("Container not found", 404));
-  }
-  if (formats.length === 0) {
-    return next(new ApiError("Formats not found", 404));
-  }
-
-  const transformedData = [];
-  formats.forEach((format) => {
-    for (let i = 0; i < format.quantity; i++) {
-      transformedData.push({
-        formatId: format.id,
-        width: format.largeur,
-        length: format.hauteur,
-        vertical: container.vertical,
-        x: container.x,
-        y: container.y,
-      });
+    if (!container) {
+      return res.status(404).json({ error: "Container not found" });
     }
-  });
-  // Delete existing results for the same projectId
-  await Resultat.destroy({
-    where: { ProjectId: projectId },
-  });
-  const pythonProcess = spawn("python", [
-    "NEWCUMA.py",
-    path.join(projectDir, `output_points.csv`), // Pass the configuration file path
-    projectDir, // Pass the output directory
-    JSON.stringify(transformedData),
-  ]);
-
-  let pythonOutput = "";
-
-  pythonProcess.stdout.on("data", (data) => {
-    pythonOutput += data.toString();
-  });
-
-  pythonProcess.stderr.on("data", (data) => {
-    console.error(`stderr: ${data}`);
-  });
-
-  pythonProcess.on("close", (code) => {
-    if (code !== 0) {
-      return res.status(500).json({
-        status: "error",
-        message: "Python script failed",
-      });
+    if (formats.length === 0) {
+      return res.status(404).json({ error: "Formats not found" });
     }
 
-    try {
-      console.log("Raw Python output:", pythonOutput); // Log raw output for debugging
-
-      // Extract only the JSON part of the output
-      const jsonMatch = pythonOutput.match(/\[.*\]/s);
-      if (!jsonMatch) {
-        throw new Error("No valid JSON found in Python output");
-      }
-      const results = JSON.parse(jsonMatch[0]);
-
-      const savePromises = results.map((result) => {
-        return Resultat.create({
-          fichier_dxf: result.fichier_dxf,
-          url_image: result.url_image,
-          ProjectId: projectId,
-          FormatId: result.formatId,
+    const transformedData = [];
+    formats.forEach((format) => {
+      for (let i = 0; i < format.quantity; i++) {
+        transformedData.push({
+          formatId: format.id,
+          width: format.largeur,
+          length: format.hauteur,
+          vertical: container.vertical,
+          x: container.x,
+          y: container.y,
         });
-      });
+      }
+    });
+    // Delete existing results for the same projectId
+    await Resultat.destroy({ where: { ProjectId: projectId } });
+    const pythonProcess = spawn("python", [
+      "NEWCUMA.py",
+      path.join(projectDir, `output_points.csv`), // Pass the configuration file path
+      projectDir, // Pass the output directory
+      JSON.stringify(transformedData),
+    ]);
 
-      Promise.all(savePromises)
-        .then(() => res.status(200).json({ status: "success", results }))
-        .catch((err) => {
-          console.error(err);
-          res.status(500).json({
-            status: "error",
-            message: "Failed to save results to the database",
+    let pythonOutput = "";
+
+    pythonProcess.stdout.on("data", (data) => {
+      pythonOutput += data.toString();
+    });
+
+    pythonProcess.stderr.on("data", (data) => {
+      console.error(`stderr: ${data}`);
+    });
+
+    pythonProcess.on("close", (code) => {
+      if (code !== 0) {
+        return res.status(500).json({
+          status: "error",
+          message: "Veuillez augmenter la taille de conteneur",
+        });
+      }
+
+      try {
+        console.log("Raw Python output:", pythonOutput); // Log raw output for debugging
+
+        // Extract only the JSON part of the output
+        const jsonMatch = pythonOutput.match(/\[.*\]/s);
+        if (!jsonMatch) {
+          throw new Error("No valid JSON found in Python output");
+        }
+        const results = JSON.parse(jsonMatch[0]);
+
+        const savePromises = results.map((result) => {
+          return Resultat.create({
+            fichier_dxf: result.fichier_dxf,
+            url_image: result.url_image,
+            ProjectId: projectId,
+            FormatId: result.formatId,
           });
         });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({
-        status: "error",
-        message: "Error parsing Python output",
-      });
-    }
-  });
+
+        Promise.all(savePromises)
+          .then(() => res.status(200).json({ status: "success", results }))
+          .catch((err) => {
+            console.error(err);
+            res.status(500).json({
+              status: "error",
+              message: "Failed to save results to the database",
+            });
+          });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({
+          status: "error",
+          message: "Error parsing Python output",
+        });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      status: "error",
+      message: "An unexpected error occurred",
+    });
+  }
 });
 
 // @desc    delete specified fichier
@@ -316,6 +322,10 @@ exports.optimisation = asyncHandler(async (req, res, next) => {
 // @access  Private
 exports.deleteFichier = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
+  const fichier = await Fichier.findOne({ where: { id: id } });
+  if (!fichier) {
+    return next(new ApiError(`Fichier not found for this id ${id}`, 404));
+  }
   const deletes = await Fichier.destroy({ where: { id: id } });
   res.status(204).send();
 });

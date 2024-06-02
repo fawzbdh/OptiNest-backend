@@ -1,0 +1,22 @@
+{
+  "files": [
+    {
+      "id": 10,
+      "filename": "http://localhost:8000/uploads/project_5/NEW2.DXF",
+      "quantity": 1,
+      "priority": 0
+    },
+    {
+      "id": 11,
+      "filename": "http://localhost:8000/uploads/project_5/NEW3.DXF",
+      "quantity": 1,
+      "priority": 0
+    },
+    {
+      "id": 12,
+      "filename": "http://localhost:8000/uploads/project_5/NEW1.DXF",
+      "quantity": 1,
+      "priority": 0
+    }
+  ]
+}
