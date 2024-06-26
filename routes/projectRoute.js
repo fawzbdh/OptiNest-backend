@@ -22,8 +22,8 @@ router
 router
   .route("/")
   .get(
-    // authController.protect,
-    // authController.allowedTo("admin", "utilisateur"),
+    authController.protect,
+    authController.allowedTo("admin"),
     getProjects
   )
   .post(
